@@ -1,37 +1,56 @@
 package main
 
-import "fmt"
-
-type Person struct { // Struct definition
-	Name     string `json:"name"`
-	PersonId int    `json:"personid"`
-}
-
-func (p Person) printPersonValue() {
-	fmt.Println("The person name is : ", p.Name, " and the person id is : ", p.PersonId)
-}
-
-func basicVariableDefinition() {
-
-	var x = 2 // Normal variable declaration
-	fmt.Println("The value of the variable x is ", x)
-
-	var n int
-	fmt.Scan(&n)
-
-	var a = make([]int, n) // Slices
-	for i := 0; i < n; i++ {
-		fmt.Scan(&a[i])
-	}
-
-	for i := 0; i < n; i++ {
-		fmt.Println(a[i])
-	}
-
-}
+import (
+	"fmt"
+	"golang/newpackage"
+)
 
 func main() {
 
-	basicVariableDefinition()
+	var n int
+
+	fmt.Println("Enter the value of n")
+	fmt.Scan(&n)
+
+	v := make([]newpackage.Person, n)
+	for i := 0; i < n; i++ {
+
+		var x newpackage.Person
+		var id int
+		var height float32
+		var name string
+
+		fmt.Println("Enter the value of ", i+1, " person")
+		fmt.Scan(&id, &height, &name)
+		x.SetID(id)
+		x.SetHeight(height)
+		x.SetName(name)
+
+		v[i] = x
+	}
+
+	var m int
+	fmt.Println("Enter the value of m")
+	fmt.Scan(&m)
+
+	w := make([]newpackage.Car, m)
+	for i:=0;i<m;i++{
+
+		var x newpackage.Car
+		var y int
+		fmt.Println("Enter the value of ", i+1, " car")
+		fmt.Scan(&y)
+		x.SetId(y)
+		w[i]=x
+	}
+
+	for i:=0;i<n;i++{
+		fmt.Println("The value of ", i+1, " person is")
+		fmt.Println(v[i].GetID(), v[i].GetHeight(), v[i].GetName())
+	}
+
+	for i:=0;i<m;i++{
+		fmt.Println("The value of the ", i+1, "car is", w[i].GetId() )
+	}
 
 }
