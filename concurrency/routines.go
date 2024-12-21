@@ -2,27 +2,26 @@ package main
 
 import "fmt"
 
-func countDigits(ch chan bool){
-	for i:=1;i<=26;i++{
-		fmt.Println(i)
+func fun1(a int, ch chan bool) {
+	for i := 1; i <= a; i++ {
+		fmt.Println("fun1 : ", i)
 	}
 	ch <- true
 }
 
-func countAlpha(ch chan bool){
-	for i:='a';i<='z';i++{
-		fmt.Printf("%c\n", i)
+func fun2(a int, ch chan bool) {
+	for i := 1; i <= a; i++ {
+		fmt.Println("fun2 : ", i)
 	}
 	ch <- true
 }
 
-func main(){
+func main() {
 
-	ch1 := make(chan bool)
-	ch2 := make(chan bool)
-	go countDigits(ch1)
-	go countAlpha(ch2)
-	<- ch1
-	<- ch2
+	ch := make(chan bool, 2)
+	go fun1(100, ch)
+	go fun2(100, ch)
+	<-ch
+	<-ch
 
 }
