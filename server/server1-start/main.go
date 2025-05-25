@@ -1,30 +1,35 @@
 package main
 
 import (
+	"encoding/json"
+	"fmt"
 	"net/http"
-
-	"github.com/go-chi/chi"
 )
 
-func toJson(a interface{}) string {
-
-
-
+type data struct {
+	Id   int    `json:"id"`
+	Name string `json:"name"`
 }
 
-func handleHome(w http.ResponseWriter, r *http.Request){
+func handleHome(w http.ResponseWriter, r *http.Request) {
+	if r.Method == http.MethodGet {
+		fmt.Println("Inside the get")
+	}
+	if r.Method == http.MethodPost {
 
+		var x data
+		err := json.NewDecoder(r.Body).Decode(&x)
+		if err != nil {
+			fmt.Println("Error tracing the request")
+		} else {
+			w.WriteHeader(http.StatusOK)
+		}
 
+		fmt.Println("The value of the id is ", x.Id, " and the value of the name is ", x.Name)
+	}
 }
 
-
-
-func main(){
-
-	router := chi.NewRouter()
-	router.Get("/", handleHome)
-	router.Post("/", handleHome)
-
-	http.ListenAndServe(":8000", nil)
-
+func main() {
+	http.HandleFunc("/", handleHome)
+	http.ListenAndServe(":8080", nil)
 }
