@@ -13,19 +13,13 @@ type data struct {
 
 func handleHome(w http.ResponseWriter, r *http.Request) {
 	if r.Method == http.MethodGet {
-		fmt.Println("Inside the get")
+		id := r.URL.Query().Get("id")
+		fmt.Println("The id value is ", id)
 	}
 	if r.Method == http.MethodPost {
-
 		var x data
-		err := json.NewDecoder(r.Body).Decode(&x)
-		if err != nil {
-			fmt.Println("Error tracing the request")
-		} else {
-			w.WriteHeader(http.StatusOK)
-		}
-
-		fmt.Println("The value of the id is ", x.Id, " and the value of the name is ", x.Name)
+		json.NewDecoder(r.Body).Decode(&x)
+		fmt.Println("The id value is ", x.Id, " and the name value is ", x.Name)
 	}
 }
 
